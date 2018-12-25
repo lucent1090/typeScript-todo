@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Api, { WeatherValidResult } from './Api';
 
 function Weather() {
-  const [temp, setTemp] = useState(0);
+  const [temp, setTemp] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     Api.readTaipeiWeather()
-      .then(data => {
-        switch(data.valid) {
+      .then(response => {
+        switch(response.valid) {
           case true:
-            const result = (data as WeatherValidResult).result;
-            const temp = result.temp == null ? 0 : result.temp;
-            setTemp(temp);
+            const data = (response as WeatherValidResult).result;
+            const { temp, description } = data;
+            setTemp(temp == null ? '--' : `${temp}`);
+            setDescription(description == null ? '--' : `${description}`);
             break;
           case false:
           default:
@@ -23,6 +25,7 @@ function Weather() {
   return (
     <div>
       {temp}
+      {description}
     </div>
   );
 };
