@@ -1,5 +1,6 @@
 import React, { useState, useContext }from 'react';
 import { ToDoCtx } from './ToDoList';
+import style from './FancyInput.module.css';
 
 function FancyInput() {
   const {list, setList} = useContext(ToDoCtx);
@@ -15,12 +16,12 @@ function FancyInput() {
   };
 
   return (
-    <>
-      <input value={inputValue} onChange={handleInputChange}/>
-      <button onClick={handleClick}>
+    <div className={style.container}>
+      <input className={style.input} value={inputValue} onChange={handleInputChange}/>
+      <button className={style.addBtn} onClick={handleClick}>
         Add
       </button>
-    </>
+    </div>
   );
 };
 

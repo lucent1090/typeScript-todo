@@ -1,5 +1,6 @@
 import React, { useState, createContext } from 'react';
 import FancyInput from './FancyInput';
+import style from './ToDoList.module.css';
 
 type Item = {
   name: string,
@@ -20,20 +21,25 @@ function ToDoList() {
   const [list, setList] = useState<Item[]>([]);
 
   return (
-    <ol>
-      {
-        list.map(item => {
-          return (
-            <li key={`${item.name}`}>
-              {item.name}
-            </li>
-          );
-        })
-      }
+    <div className={style.container}>
       <ToDoCtx.Provider value={{list, setList}}>
         <FancyInput />
       </ToDoCtx.Provider>
-    </ol>
+      {
+        list.map(item => {
+          return (
+            <div 
+              key={`${item.name}`}
+              className={style.item}>
+              <div className={style.itemLeft} />
+              <div className={style.itemRight}>
+                {item.name}
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
   );
 };
 
