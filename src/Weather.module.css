@@ -7,6 +7,15 @@
   color: #804E49;
 }
 
+.loading {
+  padding: 0rem 3rem;
+}
+
+.error {
+  padding: 0rem 3rem;
+  color: #8b0000;
+}
+
 .location {
   font-size: 3rem;
   padding: 1rem 3rem;

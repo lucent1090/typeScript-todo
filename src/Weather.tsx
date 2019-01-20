@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import Api, { WeatherValidResult } from './Api';
+import API from './API';
 import style from './Weather.module.css';
 
 function Weather() {
+  const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [temp, setTemp] = useState('');
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    Api.readTaipeiWeather()
+    setLoading(true);
+    API.readTaipeiWeather()
       .then(response => {
-        switch(response.valid) {
-          case true:
-            const data = (response as WeatherValidResult).result;
+        setLoading(false);
+        if('error' in response) {
+          setError(response.error);
+        }else {
+          const data = response.result;
             const { temp, description } = data;
             setTemp(temp == null ? '--' : `${temp} °C`);
             setDescription(description == null ? '--' : `${description}`);
-            break;
-          case false:
-          default:
-            break;
         }
       })
   }, []);
@@ -26,8 +27,18 @@ function Weather() {
   return (
     <div className={style.container}>
       <div className={style.location}> Taipei </div>
-      <div className={style.temp}> {temp} </div>
-      <div className={style.desc}>{description} </div>
+      {
+        isLoading
+          ? <div className={style.loading}> Loading Weather... </div>
+          : (
+            error == ''
+              ? (<>
+                  <div className={style.temp}> {temp} </div>
+                  <div className={style.desc}>{description} </div>
+                </>)
+              : <div className={style.error}> {error} </div>
+          )
+      }
     </div>
   );
 };

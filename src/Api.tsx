@@ -1,17 +1,15 @@
 import config from './config/config'
 
-type Weather = {
-  temp?: number,
-  description?: string,
+interface Weather {
+  temp: number | null,
+  description: string | null,
 };
 
-export type WeatherValidResult = {
-  valid: boolean,
+interface WeatherValidResult {
   result: Weather,
 };
 
-export type WeatherInvalidResult = {
-  valid: boolean,
+interface WeatherInvalidResult {
   error: string,
 };
 
@@ -27,7 +25,7 @@ function getWeatherApi(cityId: string): string {
 
 function checkStatue(response: any): Promise<any> {
   if(!response.ok) {
-    return Promise.reject({valid: false, error: response.statusText});
+    return Promise.reject({error: response.statusText});
   }
 
   return Promise.resolve(response);
@@ -35,14 +33,20 @@ function checkStatue(response: any): Promise<any> {
 
 function checkWeatherResponse(data: any): Promise<any> {
   if(data.cod === EXCEED_LIMIT_CALLS) {
-    return Promise.reject({valid: false, error: 'exceed limit of calls'});
+    return Promise.reject({error: 'exceed limit of calls'});
+  }
+  
+  let temp = null;
+  if(data.main && data.main.temp) {
+    temp = data.main.temp
   }
 
-  const temp = data.main.temp;
-  const description = data.weather[0].description;
+  let description = null;
+  if(data.weather && data.weather[0] && data.weather[0].description) {
+    description = data.weather[0].description;
+  }
 
   return Promise.resolve({
-    valid: true,
     result: {
       temp,
       description
