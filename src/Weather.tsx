@@ -10,37 +10,34 @@ function Weather() {
 
   useEffect(() => {
     setLoading(true);
-    API.readTaipeiWeather()
-      .then(response => {
-        setLoading(false);
-        if('error' in response) {
-          setError(response.error);
-        }else {
-          const data = response.result;
-            const { temp, description } = data;
-            setTemp(temp == null ? '--' : `${temp} °C`);
-            setDescription(description == null ? '--' : `${description}`);
-        }
-      })
+    API.readTaipeiWeather().then(response => {
+      setLoading(false);
+      if ('error' in response) {
+        setError(response.error);
+      } else {
+        const data = response.result;
+        const { temp, description } = data;
+        setTemp(temp == null ? '--' : `${temp} °C`);
+        setDescription(description == null ? '--' : `${description}`);
+      }
+    });
   }, []);
 
   return (
     <div className={style.container}>
       <div className={style.location}> Taipei </div>
-      {
-        isLoading
-          ? <div className={style.loading}> Loading Weather... </div>
-          : (
-            error == ''
-              ? (<>
-                  <div className={style.temp}> {temp} </div>
-                  <div className={style.desc}>{description} </div>
-                </>)
-              : <div className={style.error}> {error} </div>
-          )
-      }
+      {isLoading ? (
+        <div className={style.loading}> Loading Weather... </div>
+      ) : error == '' ? (
+        <>
+          <div className={style.temp}> {temp} </div>
+          <div className={style.desc}>{description} </div>
+        </>
+      ) : (
+        <div className={style.error}> {error} </div>
+      )}
     </div>
   );
-};
+}
 
 export default Weather;
