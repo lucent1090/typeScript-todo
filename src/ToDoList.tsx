@@ -5,12 +5,12 @@ import style from './ToDoList.module.css';
 interface Item {
   name: string;
   description: string;
-};
+}
 
 interface ToDoContext {
   list: Item[];
   setList(newList: Item[]): void;
-};
+}
 
 export const ToDoCtx = createContext<ToDoContext>({
   list: [],

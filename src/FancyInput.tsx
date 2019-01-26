@@ -8,20 +8,31 @@ function FancyInput() {
   const [isError, setError] = useState(false);
 
   const handleClick = () => {
-    if(!inputValue || (inputValue === '')) {
+    if (!inputValue || inputValue === '') {
       setError(true);
       return;
     }
 
     const leftParentheses = inputValue.indexOf('(');
     const rightParentheses = inputValue.indexOf(')');
-    if(leftParentheses === 0 && rightParentheses > 0) {
-      setList(list.concat([{ name: '', description: inputValue.slice(leftParentheses+1, rightParentheses)}]));
-    } else if(leftParentheses > 0 && rightParentheses > 0) {
-      setList(list.concat([{ 
-        name: inputValue.slice(0, leftParentheses), 
-        description: inputValue.slice(leftParentheses+1, rightParentheses)
-      }]));
+    if (leftParentheses === 0 && rightParentheses > 0) {
+      setList(
+        list.concat([
+          {
+            name: '',
+            description: inputValue.slice(leftParentheses + 1, rightParentheses)
+          }
+        ])
+      );
+    } else if (leftParentheses > 0 && rightParentheses > 0) {
+      setList(
+        list.concat([
+          {
+            name: inputValue.slice(0, leftParentheses),
+            description: inputValue.slice(leftParentheses + 1, rightParentheses)
+          }
+        ])
+      );
     } else {
       setList(list.concat([{ name: inputValue, description: '' }]));
     }
