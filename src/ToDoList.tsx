@@ -2,12 +2,12 @@ import React, { useState, createContext } from 'react';
 import FancyInput from './FancyInput';
 import style from './ToDoList.module.css';
 
-type Item = {
+interface Item {
   name: string;
   description: string;
 };
 
-type ToDoContext = {
+interface ToDoContext {
   list: Item[];
   setList(newList: Item[]): void;
 };
@@ -27,11 +27,14 @@ function ToDoList() {
       <ToDoCtx.Provider value={{ list, setList }}>
         <FancyInput />
       </ToDoCtx.Provider>
-      {list.map(item => {
+      {list.map((item, idx) => {
         return (
-          <div key={`${item.name}`} className={style.item}>
+          <div key={`${item.name}-${idx}`} className={style.item}>
             <div className={style.itemLeft} />
-            <div className={style.itemRight}>{item.name}</div>
+            <div className={style.itemRight}>
+              <div className={style.name}> {item.name}</div>
+              <div className={style.description}> {item.description}</div>
+            </div>
           </div>
         );
       })}

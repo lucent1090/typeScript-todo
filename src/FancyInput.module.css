@@ -13,13 +13,33 @@
   flex: 5 0 auto;
   background-color: #FBFAF8;
 }
+.input:focus {
+  outline: none;
+  border-bottom: 1px solid rgb(33, 61, 145);
+}
+
+.isInputError {
+  border-bottom: 1px solid rgb(212, 39, 8);
+}
 
 .addBtn {
   margin: 0;
-  padding: 0;
-  border: 0 solid #FBFAF8;
+  padding: 2px;
+  border: 1px solid #0A122A;
+  border-radius: 4px;
   flex: 1 0 auto;
   background-color: #FBFAF8;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #0A122A;
+}
+.addBtn:focus {
+  outline: none;
+}
+.addBtn:hover {
+  color: rgb(33, 61, 145);
+}
+.addBtn:active {
+  color: rgb(33, 61, 145);
+  box-shadow: 1px 1px #666;
+  transform: translate(2px, 2px);
 }
