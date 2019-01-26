@@ -44,6 +44,10 @@
       "prettier --write --parser typescript --single-quote",
       "git add"
     ],
+    "*.{js,jsx}": [
+      "prettier --write --single-quote",
+      "git add"
+    ],
     "*.{json. md}": [
       "prettier --write",
       "git add"
